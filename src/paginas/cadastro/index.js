@@ -1,65 +1,53 @@
-import { Component } from "react";
-import { Text,View, Button, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
-import React from "react";
-import { TextInput } from "react-native";
+import { Text, View, StyleSheet, TouchableOpacity, TextInput } from "react-native";
+import React,{useState} from "react";
+import firebase from "../../firebase/firebaseConnection";
 
+export default function Cadastrar(){    
 
-export default class Cadastro extends React.Component {
-    render() {
-      return (
-        <View style={styles.container}>
-          <View>
-            <Text style={styles.header}>Cadastro</Text>
-            <ScrollView>
-                <View style={styles.inputContainer}>
-                    <TextInput
-                    style={styles.textInput}
-                    placeholder="Nome"
-                    maxLength={50}
-                    />
-                </View>
-                <View style={styles.inputContainer}>
-                    <TextInput
-                    style={styles.textInput}
-                    placeholder="Nota 1"
-                    maxLength={5}
-                    />
-                </View>
-                <View style={styles.inputContainer}>
-                    <TextInput
-                    style={styles.textInput}
-                    placeholder="Nota 2"
-                    maxLength={5}
-                    />
-                </View>
-                <View style={styles.inputContainer}>
-                    <TextInput
-                    style={styles.textInput}
-                    placeholder="Nota 3"
-                    maxLength={5}
-                    />
-                </View>
-                <View style={styles.inputContainer}>
-                    <TextInput
-                    style={styles.textInput}
-                    placeholder="Foto de Perfil"
-                    maxLength={100}
-                    />
-                </View>
-                <View style={styles.inputContainer}>
-                    <TouchableOpacity
-                        style={styles.saveButton}
-                    >
-                        <Text style={styles.saveButtonText}>Cadastrar</Text>
-                    </TouchableOpacity>
-                </View>
-            </ScrollView>
-          </View>
-        </View>
-      );
-    }
+  const [nome,setNome] = useState("");
+  const [nota1,setNota1] = useState("");
+  const [nota2,setNota2] = useState("");
+  const [nota3,setNota3] = useState("");
+  const [imagem,setImagem] = useState("");
+
+  async function Cadastrar() {
+        
+    const Alunos = await firebase.database().ref('Alunos');
+    const chave = Alunos.push().key;
+
+    Alunos.child(chave).set({
+      Nome: nome,
+      Nota1: nota1,
+      Nota2: nota2,
+      Nota3: nota3,
+      Imagem: imagem
+    })
   }
-  
+  return (
+
+    <View style={styles.container}>
+
+      <Text style={styles.header}>Cadastro</Text>
+
+        <View style={styles.inputContainer}>
+          <TextInput style={styles.textInput} placeholder="Nome" maxLength={50} onChangeText = {(texto)=> setNome(texto)}></TextInput>
+
+          <TextInput style={styles.textInput} placeholder="Nota 1" maxLength={5} onChangeText = {(texto)=> setNota1(texto)}></TextInput>
+
+          <TextInput style={styles.textInput} placeholder="Nota 2" maxLength={5} onChangeText = {(texto)=> setNota2(texto)}></TextInput>
+
+          <TextInput style={styles.textInput} placeholder="Nota 3" maxLength={5} onChangeText = {(texto)=> setNota3(texto)}></TextInput>
+
+          <TextInput style={styles.textInput} placeholder="Link com a foto do aluno" maxLength={100} onChangeText = {(texto)=> setImagem(texto)}></TextInput>
+        </View>
+
+        <TouchableOpacity style={styles.saveButton} onPress={Cadastrar}>
+          <Text style={styles.saveButtonText}>Cadastrar</Text>
+        </TouchableOpacity>
+    </View>
+  );
+}
+
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -80,7 +68,7 @@ export default class Cadastro extends React.Component {
         borderTopWidth: 1,
         borderBottomWidth: 1,
         height: 50,
-        fontSize: 25,
+        fontSize: 20,
         paddingLeft: 20,
         paddingRight: 20
       },

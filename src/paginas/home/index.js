@@ -43,14 +43,10 @@ export default function Home() {
     <View style = {styles.container}>
       <Text style={{fontSize:30,fontWeight:'bold',}}> LISTA DE ALUNOS  </Text>
 
-
       <Text>{alunos}</Text>
       <Text>{nota1}</Text>
       <Text>{nota2}</Text>
       <Text>{nota3}</Text>
-
-
-
 
     </View>
   );
