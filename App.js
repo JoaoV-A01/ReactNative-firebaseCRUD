@@ -7,19 +7,14 @@ import Rotas from './src/rotas'
 
 export default function App() {
 
-
   return (
 
-   
-<NavigationContainer>
+    <NavigationContainer>
 
-<Rotas></Rotas>
+    <Rotas></Rotas>
 
-</NavigationContainer>
+    </NavigationContainer>
 
-
-
-    
   );
 }
 
